@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import confetti from 'canvas-confetti'
 import './app.css'
 
 const TURN = {
@@ -14,7 +15,7 @@ const Square = ({ children, isSelected, updateBoard, index }) => {
   }
 
   return (
-    <div onClick={handleClick} className= {className}>
+    <div onClick={handleClick} className={className}>
       {children}
     </div>
   )
@@ -42,7 +43,7 @@ export const App = () => {
   const checkWinner = (boardToCheck) => {
 
     // revisamos todas las opciones ganadoras para ver si X u O gano
-    for (const combo of winnerCombos){
+    for (const combo of winnerCombos) {
       const [a, b, c] = combo
       if (
         boardToCheck[a] && // ves si 0 es una X o una O
@@ -55,8 +56,18 @@ export const App = () => {
     return null; // no hay ganador
   };
 
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURN.X)
+    setWinner(null)
+
+  }
+
+  const checkEndGame = (newBoard) => {  // revisa si todos (every) de los squares del newBoard estan llenos con X u O 
+    return newBoard.every((square) => square !== null)
+  }
   const updateBoard = (index) => {
-    
+
     // no actualizamos esta posicion si ya tiene algo    
     if (board[index] || winner) return
     // actualizamos el tablero
@@ -68,11 +79,11 @@ export const App = () => {
     setTurn(newTurn)
     // revisar si hay un ganador
     const newWinner = checkWinner(newBoard)
-    if (newWinner){
-      setWinner((prevWinner) => {
-        console.log(`El ganador es: ${newWinner} y el anterior ganador fue: ${prevWinner}`)
-        return newWinner 
-      })
+    if (newWinner) {
+      confetti()
+      setWinner(newWinner)
+    } else if (checkEndGame(newBoard)) { //ver si hay empate para finalizar el juego
+      setWinner(false) //empate
     }
   };
 
@@ -80,6 +91,12 @@ export const App = () => {
   return (
     <main className='board'>
       <h1>tic tac toe</h1>
+
+      <button onClick={resetGame}>
+        Reset Game
+      </button>
+
+      {/* seccion para los juegos */}
       <section className='game'>
         {
           board.map((_, index) => {
@@ -95,7 +112,7 @@ export const App = () => {
           })
         }
       </section>
-
+      {/* seccion para los turnos */}
       <section className='turn' >
         <Square
           isSelected={turn === TURN.X}>
@@ -106,6 +123,31 @@ export const App = () => {
           {TURN.O}
         </Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className='winner'>
+            <div>
+              <h2>
+                {
+                  winner === false ? 'Es empate' : 'Ha ganado:'
+                }
+              </h2>
+              <header>
+                {
+                  winner && <Square>{winner}</Square>
+                }
+              </header>
+              <footer>
+                <button onClick={resetGame}>Empezar de nuevo</button>
+              </footer>
+            </div>
+
+          </section>
+        )
+      }
+
+
     </main>
   )
 };

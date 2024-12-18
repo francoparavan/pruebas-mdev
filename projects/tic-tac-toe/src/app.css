@@ -71,6 +71,7 @@
     width: fit-content;
     position: relative;
     border-radius: 10px;
+    gap: 10px;
   }
   
   .turn .square,
@@ -78,7 +79,7 @@
     width: 70px;
     height: 70px;
     pointer-events: none;
-    border-color: transparent;
+    border-color: white;
   }
   
   .square.is-selected {
@@ -88,13 +89,14 @@
   
   .winner {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
     top: 0;
     left: 0;
-    display: grid;
-    place-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo oscuro */
   }
   
   .winner .text {
@@ -119,6 +121,12 @@
     gap: 15px;
   }
   
+  .winner header {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+  }
+
   .square {
     width: 100px;
     height: 100px;
@@ -129,4 +137,54 @@
     cursor: pointer;
     font-size: 48px;
     box-sizing: border-box;
+  }
+
+  .winner > div {
+    background-color: #111; /* Fondo del contenedor */
+    padding: 30px 20px; /* Espaciado interno */
+    border: 2px solid #fff; /* Borde blanco */
+    border-radius: 10px; /* Bordes redondeados */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espaciado entre elementos */
+    width: fit-content;
+    min-width: 250px;
+  }
+
+  .winner h2 {
+    color: #fff;
+    font-size: 24px; /* Tamaño del título */
+    font-weight: bold; /* Título en negrita */
+    margin: 0;
+    text-align: center;
+  }
+
+  .winner .square {
+    width: 70px;
+    height: 70px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    color: #fff;
+    border: 2px solid #fff; 
+    border-radius: 5px;
+  }
+
+  .winner button {
+    padding: 10px 15px;
+    background: transparent;
+    border: 2px solid #fff; /* Borde blanco */
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .winner button:hover {
+    background-color: #fff; /* Cambio de fondo al hacer hover */
+    color: #111; /* Texto negro en hover */
   }
