@@ -1,0 +1,22 @@
+/* Esto es para alinearlos en columna */
+main {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Centra el main */
+  width: 100%;
+}
+
+/* Esto es para alinearlos en fila */
+section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+section img {
+  max-width: 400px;
+  height: auto;
+}
